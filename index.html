@@ -9,7 +9,19 @@
 <body>
     <div class="container">
         <h1>Calendario de Turnos</h1>
-        <div id="calendar" class="calendar"></div>
+        <div class="calendar-header">
+            <span id="month-name"></span>
+        </div>
+        <table id="calendar-table" class="calendar-table">
+            <thead>
+                <tr>
+                    <th>Turno</th>
+                    <th>Nombre</th>
+                    <th>RUT</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
         <button onclick="generatePDF()">Generar PDF</button>
     </div>
     <script src="script.js"></script>
