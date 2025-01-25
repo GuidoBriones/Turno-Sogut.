@@ -22,32 +22,30 @@ h1 {
     margin-bottom: 20px;
 }
 
-.calendar {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    grid-gap: 5px;
+.calendar-header {
+    font-size: 24px;
     margin-bottom: 20px;
+    font-weight: bold;
 }
 
-.day-cell {
-    width: 100px;
-    height: 100px;
-    background-color: #e0e0e0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 5px;
-    cursor: pointer;
-    position: relative;
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
 }
 
-.day-cell input {
-    width: 80%;
-    padding: 5px;
+th, td {
+    padding: 10px;
+    border: 1px solid #ddd;
     text-align: center;
-    border: none;
-    background: transparent;
-    font-size: 14px;
+}
+
+input[type="text"] {
+    width: 90%;
+    padding: 5px;
+    margin: 5px 0;
+    text-align: center;
+    border-radius: 5px;
 }
 
 button {
@@ -58,6 +56,7 @@ button {
     cursor: pointer;
     font-size: 16px;
     border-radius: 5px;
+    margin-top: 20px;
 }
 
 button:hover {
