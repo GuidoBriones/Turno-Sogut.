@@ -1,6 +1,14 @@
 let people = [
-    { name: "Juan Pérez", rut: "12.345.678-9" },
-    { name: "Ana González", rut: "23.456.789-0" }
+    { name: "JOSE VALENCIA HOYOS", rut: "24964408-0" },
+    { name: "ANGEL ROJAS LONDOÑO", rut: "26771733-8" },
+    { name: "RICHARD COLINA COLINA", rut: "25751236-3" },
+    { name: "YORNATAN PEREIRA HERNANDEZ", rut: "28169717-K" },
+    { name: "MARCIAL VELASCO SUAREZ", rut: "24418305-0" },
+    { name: "KAREM SANTIS ROJAS", rut: "11326174-9" },
+    { name: "VALENTIN VALLEJOS MARTINEZ", rut: "24963989-3" },
+    { name: "CARLOS GUZMAN SALAZAR", rut: "28239185-6" },
+    { name: "DICK ASPRILLA ASPRILLA", rut: "25507071-1" },
+    { name: "FERNANDO PIZARRO TRONCOSO", rut: "11344582-3" }
 ];
 
 const daysOfWeek = ["Lu", "Ma", "Mi", "Ju", "Vi", "Sa", "Do"];
