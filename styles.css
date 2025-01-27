@@ -17,7 +17,7 @@ body {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    overflow-x: auto;
+    overflow-x: auto; /* Permitir el desplazamiento horizontal */
 }
 
 h1 {
@@ -40,7 +40,9 @@ table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
-    table-layout: fixed;
+    table-layout: auto;
+    overflow-x: auto;
+    display: block;
 }
 
 th, td {
@@ -49,7 +51,6 @@ th, td {
     text-align: center;
     word-wrap: break-word;
     font-size: 12px;
-    min-width: 70px;
 }
 
 input[type="text"], select {
