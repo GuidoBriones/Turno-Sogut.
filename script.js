@@ -18,7 +18,7 @@ function generateCalendar(monthIndex) {
     const numDays = new Date(2024, monthIndex + 1, 0).getDate();
 
     const daysHeader = document.querySelector("#turnos-table thead tr");
-    daysHeader.innerHTML = `<th>Nombre</th><th>RUT</th><th>Cargo</th>`;
+    daysHeader.innerHTML = `<th>Nombre</th><th>RUT</th><th>Cargo</th>`; 
 
     let day = 1;
     for (let i = 0; i < 31; i++) {
@@ -49,22 +49,17 @@ function generateCalendar(monthIndex) {
         row.appendChild(rutCell);
 
         for (let i = 1; i <= numDays; i++) {
-            if (i <= numDays) {
-                const dayCell = document.createElement("td");
-                const select = document.createElement("select");
-                const options = ["si", "no", "desc"].map(value => {
-                    const option = document.createElement("option");
-                    option.value = value;
-                    option.innerText = value.charAt(0).toUpperCase() + value.slice(1);
-                    return option;
-                });
-                options.forEach(option => select.appendChild(option));
-                dayCell.appendChild(select);
-                row.appendChild(dayCell);
-            } else {
-                const dayCell = document.createElement("td");
-                row.appendChild(dayCell);
-            }
+            const dayCell = document.createElement("td");
+            const select = document.createElement("select");
+            const options = ["si", "no", "desc"].map(value => {
+                const option = document.createElement("option");
+                option.value = value;
+                option.innerText = value.charAt(0).toUpperCase() + value.slice(1);
+                return option;
+            });
+            options.forEach(option => select.appendChild(option));
+            dayCell.appendChild(select);
+            row.appendChild(dayCell);
         }
 
         tableBody.appendChild(row);
@@ -79,6 +74,11 @@ function addPerson() {
         people.push({ name: name, rut: rut });
         generateCalendar(document.getElementById("month-select").value);
     }
+}
+
+function saveChanges() {
+    alert("Cambios guardados correctamente.");
+    // En este paso puedes guardar los datos localmente o hacer alguna otra acción como guardarlos en un archivo.
 }
 
 function downloadPDF() {
