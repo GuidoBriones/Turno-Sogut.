@@ -3,8 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calendario de Turnos</title>
+    <title>Calendario de Turnos</title>   
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
     <style>
+        /* Estilo general */
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f9;
@@ -60,7 +64,7 @@
         button:hover {
             background-color: #45a049;
         }
-        
+
         /* Estilo para impresión */
         @media print {
             body, html {
@@ -96,12 +100,13 @@
             }
         }
     </style>
+
 </head>
 <body>
 
     <div class="container">
         <h1>Calendario de Turnos</h1>
-
+        
         <label for="month-select">Seleccione el mes:</label>
         <select id="month-select">
             <option value="0">Enero</option>
@@ -118,7 +123,7 @@
             <option value="11">Diciembre</option>
         </select>
 
-        <h3 id="month-name">Mes: Enero 2024</h3>
+        <h3 id="month-name"></h3>
 
         <div id="calendar-container">
             <table id="turnos-table">
@@ -136,44 +141,8 @@
                         <th>Do</th>
                     </tr>
                 </thead>
-                <tbody id="turnos-tbody">
-                    <tr>
-                        <td>JOSE VALENCIA HOYOS</td>
-                        <td>24964408-0</td>
-                        <td>Empleado</td>
-                        <td><input type="text" placeholder="Si/No"></td>
-                        <td><input type="text" placeholder="Si/No"></td>
-                        <td><input type="text" placeholder="Si/No"></td>
-                        <td><input type="text" placeholder="Si/No"></td>
-                        <td><input type="text" placeholder="Si/No"></td>
-                        <td><input type="text" placeholder="Si/No"></td>
-                        <td><input type="text" placeholder="Si/No"></td>
-                    </tr>
-                    <tr>
-                        <td>ANGEL ROJAS LONDOÑO</td>
-                        <td>26771733-8</td>
-                        <td>Empleado</td>
-                        <td><input type="text" placeholder="Si/No"></td>
-                        <td><input type="text" placeholder="Si/No"></td>
-                        <td><input type="text" placeholder="Si/No"></td>
-                        <td><input type="text" placeholder="Si/No"></td>
-                        <td><input type="text" placeholder="Si/No"></td>
-                        <td><input type="text" placeholder="Si/No"></td>
-                        <td><input type="text" placeholder="Si/No"></td>
-                    </tr>
-                    <tr>
-                        <td>RICHARD COLINA COLINA</td>
-                        <td>25751236-3</td>
-                        <td>Supervisor</td>
-                        <td><input type="text" placeholder="Si/No"></td>
-                        <td><input type="text" placeholder="Si/No"></td>
-                        <td><input type="text" placeholder="Si/No"></td>
-                        <td><input type="text" placeholder="Si/No"></td>
-                        <td><input type="text" placeholder="Si/No"></td>
-                        <td><input type="text" placeholder="Si/No"></td>
-                        <td><input type="text" placeholder="Si/No"></td>
-                    </tr>
-                    <!-- Más filas aquí... -->
+                <tbody>
+                    <!-- Las filas se llenarán dinámicamente con los datos -->
                 </tbody>
             </table>
         </div>
@@ -184,6 +153,8 @@
         <button onclick="generatePDF()">Generar PDF</button>
         <button onclick="shareViaWhatsApp()">Compartir en WhatsApp</button>
     </div>
+
+    <script src="script.js"></script>
 
     <script>
         // Función para imprimir el calendario en una sola página A4
