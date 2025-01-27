@@ -17,7 +17,7 @@ body {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    overflow-x: auto; /* Permite hacer scroll horizontal */
+    overflow-x: auto;
 }
 
 h1 {
@@ -40,8 +40,7 @@ table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
-    table-layout: fixed; /* Para que las celdas no se desborden */
-    overflow-x: auto; /* Permitir scroll horizontal */
+    table-layout: fixed;
 }
 
 th, td {
@@ -87,7 +86,7 @@ button:hover {
         font-size: 14px;
     }
     .container {
-        overflow-x: auto; /* Permitir scroll horizontal */
+        overflow-x: auto;
         width: 100%;
     }
 }
