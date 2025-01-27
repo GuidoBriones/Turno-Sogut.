@@ -11,8 +11,7 @@
 
     <div class="container">
         <h1>Calendario de Turnos</h1>
-        <div id="month-name"></div>
-
+        
         <label for="month-select">Seleccione el mes:</label>
         <select id="month-select">
             <option value="0">Enero</option>
@@ -29,6 +28,8 @@
             <option value="11">Diciembre</option>
         </select>
 
+        <h3 id="month-name"></h3>
+
         <table id="turnos-table">
             <thead>
                 <tr>
@@ -42,8 +43,9 @@
             </tbody>
         </table>
 
-        <button onclick="downloadPDF()">Descargar PDF</button>
+        <button onclick="downloadPDF()">Generar PDF</button>
         <button onclick="addPerson()">Agregar Persona</button>
+        <button onclick="saveChanges()">Guardar Cambios</button>
     </div>
 
     <script src="script.js"></script>
