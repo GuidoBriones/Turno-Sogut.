@@ -48,6 +48,7 @@ th, td {
     border: 1px solid #ddd;
     text-align: center;
     word-wrap: break-word;
+    font-size: 12px;
 }
 
 input[type="text"], select {
@@ -75,7 +76,7 @@ button:hover {
 
 @media (max-width: 600px) {
     table {
-        font-size: 12px;
+        font-size: 10px;
     }
     th, td {
         padding: 5px;
@@ -83,8 +84,8 @@ button:hover {
     select, input[type="text"] {
         font-size: 14px;
     }
-    /* Se hace la tabla desplazable horizontalmente */
     .container {
-        overflow-x: auto;
+        overflow-x: auto; /* Permitir scroll horizontal */
+        width: 100%;
     }
 }
