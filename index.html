@@ -3,15 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Turnos Sogut</title>
+    <title>Calendario de Turnos</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
+
     <div class="container">
         <h1>Calendario de Turnos</h1>
-        
-        <!-- Selector de mes -->
-        <label for="month-select">Selecciona el mes:</label>
+        <div id="month-name"></div>
+
+        <label for="month-select">Seleccione el mes:</label>
         <select id="month-select">
             <option value="0">Enero</option>
             <option value="1">Febrero</option>
@@ -27,29 +29,24 @@
             <option value="11">Diciembre</option>
         </select>
 
-        <div id="month-name"></div>
-        
-        <table id="turnos-table" class="turnos-table">
+        <table id="turnos-table">
             <thead>
                 <tr>
-                    <th rowspan="2">Nombre</th>
-                    <th rowspan="2">RUT</th>
-                    <th colspan="31">Días</th>
-                </tr>
-                <tr>
-                    <!-- Las cabeceras de los días serán generadas automáticamente -->
+                    <th>Nombre</th>
+                    <th>RUT</th>
+                    <th>Cargo</th>
+                    <!-- Las cabeceras de los días serán generadas dinámicamente -->
                 </tr>
             </thead>
             <tbody>
-                <!-- Las filas de las personas se agregarán aquí -->
+                <!-- Las filas serán generadas dinámicamente -->
             </tbody>
         </table>
-        
+
+        <button onclick="downloadPDF()">Descargar PDF</button>
         <button onclick="addPerson()">Agregar Persona</button>
-        <button onclick="downloadPDF()">Generar PDF</button>
     </div>
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
     <script src="script.js"></script>
 </body>
 </html>
