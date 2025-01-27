@@ -191,14 +191,31 @@
             tableBody.appendChild(newRow);
         }
 
-        // Función para guardar cambios (placeholder)
+        // Función para guardar cambios (descargar los cambios como archivo JSON)
         function saveChanges() {
-            alert("Cambios guardados.");
+            const table = document.getElementById("turnos-table");
+            const rows = Array.from(table.rows);
+            const data = rows.slice(1).map(row => {
+                return Array.from(row.cells).map(cell => cell.innerText || cell.firstChild.value);
+            });
+
+            const jsonData = JSON.stringify(data);
+            const blob = new Blob([jsonData], { type: "application/json" });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'turnos.json';
+            link.click();
         }
 
-        // Función para generar PDF (placeholder)
+        // Función para generar PDF
         function generatePDF() {
-            alert("Generando PDF...");
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF('l', 'mm', 'a4');
+
+            doc.autoTable({ html: '#turnos-table' });
+
+            // Guardar el PDF
+            doc.save('calendario_turnos.pdf');
         }
 
         // Función para compartir vía WhatsApp (placeholder)
