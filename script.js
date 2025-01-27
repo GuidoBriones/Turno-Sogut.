@@ -93,15 +93,22 @@ function addPerson() {
     }
 }
 
-// Función para descargar el calendario en PDF
+// Función para descargar el calendario en PDF con nombre personalizado
 function downloadPDF() {
     const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
+    const doc = new jsPDF({
+        orientation: 'landscape', // Rotar para aprovechar mejor el espacio
+        unit: 'mm',
+        format: 'letter' // Tamaño carta (8.5 x 11)
+    });
 
     doc.text("Calendario de Turnos", 20, 20);
     doc.autoTable({ html: '#turnos-table' });
 
-    doc.save('calendario_turnos.pdf');
+    const fileName = prompt("Ingrese un nombre para el archivo PDF", "calendario_turnos.pdf");
+    if (fileName) {
+        doc.save(fileName);
+    }
 }
 
 // Llamar a la función para generar el calendario al cargar la página
