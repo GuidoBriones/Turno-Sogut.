@@ -10,6 +10,7 @@ function generateCalendar(monthIndex) {
         "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", 
         "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
     ];
+
     const monthNameElement = document.getElementById("month-name");
     monthNameElement.innerText = `Mes de ${monthName[monthIndex]} 2024`;
 
@@ -47,7 +48,7 @@ function generateCalendar(monthIndex) {
         rutCell.innerText = person.rut;
         row.appendChild(rutCell);
 
-        for (let i = 1; i <= 31; i++) {
+        for (let i = 1; i <= numDays; i++) {
             if (i <= numDays) {
                 const dayCell = document.createElement("td");
                 const select = document.createElement("select");
