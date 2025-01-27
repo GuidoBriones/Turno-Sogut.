@@ -81,21 +81,9 @@ function saveChanges() {
     alert("Cambios guardados correctamente.");
 }
 
-function downloadPDF() {
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF({
-        orientation: 'landscape',
-        unit: 'mm',
-        format: 'letter'
-    });
-
-    doc.text("Calendario de Turnos", 20, 20);
-    doc.autoTable({ html: '#turnos-table' });
-
-    const fileName = prompt("Ingrese un nombre para el archivo PDF", "calendario_turnos.pdf");
-    if (fileName) {
-        doc.save(fileName);
-    }
+function printCalendar() {
+    alert("Se abrirá la ventana de impresión.");
+    window.print(); // Abre el cuadro de impresión del navegador
 }
 
 function shareViaWhatsApp() {
