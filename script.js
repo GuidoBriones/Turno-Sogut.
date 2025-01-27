@@ -1,97 +1,97 @@
-// Definimos los días de la semana y los meses
-const daysOfWeek = ['L', 'M', 'M', 'J', 'V', 'S', 'D', 'L', 'M', 'M', 'J', 'V', 'S', 'D', 'L', 'M', 'M', 'J', 'V', 'S', 'D', 'L', 'M', 'M', 'J', 'V', 'S', 'D', 'L', 'M', 'M'];
-const months = [
-    "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", 
-    "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+// Lista de personas inicial (nombre, rut)
+let people = [
+    { name: "Juan Pérez", rut: "12.345.678-9" },
+    { name: "Ana González", rut: "23.456.789-0" }
 ];
 
-// Lista de personas (nombre, RUT, cargo)
-const people = [
-    {name: "KAREM SANTIS", rut: "12.837.593-7", cargo: "APR"},
-    {name: "MARCIAL SUAREZ", rut: "24.418.305-0", cargo: "MAESTRO OOCC"},
-    {name: "RICHARD COLINA", rut: "", cargo: "SUPERVISOR"},
-    {name: "ANGEL ESNAIDER ROJAS", rut: "27.985.208-7", cargo: "SOLDADOR"},
-    {name: "YORNATAN PEREIRA", rut: "28.169.717-K", cargo: "AYUD OOCC"},
-    {name: "JAVIER VALENCIA", rut: "", cargo: "AYUDANTE"},
-    {name: "CARLOS GUZMAN", rut: "", cargo: "AYUDANTE"},
-    {name: "VALENTIN VALLEJOS", rut: "", cargo: "AYUDANTE"},
-    {name: "DICK ASPRILLA", rut: "", cargo: "AYUDANTE"}
-];
+// Días de la semana
+const daysOfWeek = ["Lu", "Ma", "Mi", "Ju", "Vi", "Sa", "Do"];
 
-// Función para generar el calendario
-function generateCalendar() {
-    const calendarTableBody = document.querySelector("#calendar-table tbody");
-    const currentMonth = new Date().getMonth(); // Obtener el mes actual
-    const currentYear = new Date().getFullYear();
+// Función para generar el calendario y ajustar los días según el mes seleccionado
+function generateCalendar(monthIndex) {
+    const monthName = [
+        "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", 
+        "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+    ];
+    const monthNameElement = document.getElementById("month-name");
+    monthNameElement.innerText = `Mes de ${monthName[monthIndex]} 2024`;
 
-    // Mostrar el nombre del mes
-    const monthName = document.getElementById("month-name");
-    monthName.textContent = `${months[currentMonth]} ${currentYear}`;
+    // Determinar el primer día del mes
+    const firstDay = new Date(2024, monthIndex, 1).getDay(); // Primer día del mes (0=domingo, 1=lunes, ...)
+    const numDays = new Date(2024, monthIndex + 1, 0).getDate(); // Número de días del mes
 
-    // Limpiar cualquier fila existente en el calendario
-    calendarTableBody.innerHTML = "";
+    // Generar las cabeceras de los días
+    const daysHeader = document.querySelector("#turnos-table thead tr:nth-child(2)");
+    daysHeader.innerHTML = "";
+    let day = 1;
+    
+    // Llenar la cabecera con los días de la semana
+    for (let i = 0; i < 31; i++) {
+        if (day <= numDays) {
+            const th = document.createElement("th");
+            th.innerText = `${daysOfWeek[(firstDay + i) % 7]} ${day}`;
+            daysHeader.appendChild(th);
+            day++;
+        } else {
+            const th = document.createElement("th");
+            th.innerText = "";
+            daysHeader.appendChild(th);
+        }
+    }
 
-    // Crear las filas para cada persona
+    // Limpiar las filas anteriores
+    const tableBody = document.querySelector("#turnos-table tbody");
+    tableBody.innerHTML = "";
+
+    // Generar las filas para cada persona
     people.forEach(person => {
         const row = document.createElement("tr");
-        
+
         // Columna Nombre
         const nameCell = document.createElement("td");
-        nameCell.textContent = person.name;
+        nameCell.innerText = person.name;
         row.appendChild(nameCell);
 
         // Columna RUT
         const rutCell = document.createElement("td");
-        rutCell.textContent = person.rut;
+        rutCell.innerText = person.rut;
         row.appendChild(rutCell);
-
-        // Columna Cargo
-        const cargoCell = document.createElement("td");
-        cargoCell.textContent = person.cargo;
-        row.appendChild(cargoCell);
 
         // Crear las celdas para los días del mes
         for (let i = 1; i <= 31; i++) {
-            const dayCell = document.createElement("td");
-            const input = document.createElement("input");
-            input.type = "text";
-            input.placeholder = "si";
-            dayCell.appendChild(input);
-            row.appendChild(dayCell);
+            if (i <= numDays) {
+                const dayCell = document.createElement("td");
+                const input = document.createElement("input");
+                input.type = "text";
+                input.placeholder = "si"; // Por defecto puede ser "si"
+                dayCell.appendChild(input);
+                row.appendChild(dayCell);
+            } else {
+                const dayCell = document.createElement("td");
+                row.appendChild(dayCell);
+            }
         }
 
         // Agregar la fila al calendario
-        calendarTableBody.appendChild(row);
+        tableBody.appendChild(row);
     });
 }
 
-// Función para generar el PDF con la información
-function generatePDF() {
-    const doc = new jsPDF();
-    doc.text('Calendario de Turnos', 20, 20);
-    doc.text(document.getElementById("month-name").textContent, 20, 30);
-    
-    const calendarRows = document.querySelectorAll("#calendar-table tbody tr");
-    let y = 40;
-    
-    calendarRows.forEach((row, index) => {
-        const name = row.cells[0].textContent;
-        const rut = row.cells[1].textContent;
-        const cargo = row.cells[2].textContent;
-        doc.text(`Nombre: ${name} (RUT: ${rut}, Cargo: ${cargo})`, 20, y);
-        y += 10;
-        
-        const days = [];
-        for (let i = 3; i < row.cells.length; i++) {
-            days.push(row.cells[i].querySelector('input').value || "-");
-        }
-        doc.text(`Días: ${days.join(", ")}`, 20, y);
-        y += 20;
-    });
+// Función para agregar una persona a la lista
+function addPerson() {
+    const name = prompt("Ingrese el nombre de la persona:");
+    const rut = prompt("Ingrese el RUT de la persona:");
 
-    // Guardar el PDF
-    doc.save('calendario_turnos.pdf');
+    if (name && rut) {
+        people.push({ name: name, rut: rut });
+        generateCalendar(document.getElementById("month-select").value);
+    }
 }
 
-// Iniciar la generación del calendario
-generateCalendar();
+// Llamar a la función para generar el calendario al cargar la página
+document.getElementById("month-select").addEventListener("change", (e) => {
+    generateCalendar(e.target.value);
+});
+
+// Generar el calendario para el mes inicial (Enero)
+generateCalendar(0);
