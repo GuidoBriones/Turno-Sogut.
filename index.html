@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calendario de Turnos</title>   
+    <title>Calendario de Turnos</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
@@ -36,7 +36,7 @@
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
-            table-layout: auto; /* Permite que las celdas se ajusten al contenido */
+            table-layout: fixed; /* La tabla tendrá un ancho fijo para evitar que se desborde */
         }
         table th, table td {
             padding: 10px;
@@ -73,31 +73,32 @@
                 height: 100%;
                 margin: 0;
                 padding: 0;
+                overflow: visible; /* Asegura que la página se ajuste al contenido */
             }
             .container {
                 width: 100%;
                 margin: 0;
-                padding: 20px;
+                padding: 10px; /* Reducir el padding para maximizar el espacio */
             }
             table {
                 width: 100%;
                 border-collapse: collapse;
-                margin-top: 20px;
                 font-size: 10px; /* Ajustar tamaño de fuente para la impresión */
+                margin-top: 0;
             }
             table th, table td {
-                padding: 5px;
+                padding: 4px; /* Reducir padding para maximizar el espacio */
                 text-align: center;
                 border: 1px solid #ddd;
                 min-width: 60px;
             }
             button {
-                display: none;
+                display: none; /* No mostrar botones al imprimir */
             }
             /* Ajustar la tabla para que se ajuste a una hoja A4 */
             @page {
                 size: A4;
-                margin: 10mm;
+                margin: 5mm; /* Ajustar márgenes para que se aproveche más el espacio */
             }
         }
     </style>
