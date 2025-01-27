@@ -30,20 +30,22 @@
 
         <h3 id="month-name"></h3>
 
-        <table id="turnos-table">
-            <thead>
-                <tr>
-                    <th>Nombre</th>
-                    <th>RUT</th>
-                    <th>Cargo</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Las filas se llenarán dinámicamente con los datos -->
-            </tbody>
-        </table>
+        <div id="calendar-container">
+            <table id="turnos-table">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>RUT</th>
+                        <th>Cargo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Las filas se llenarán dinámicamente con los datos -->
+                </tbody>
+            </table>
+        </div>
 
-        <button onclick="downloadPDF()">Generar PDF</button>
+        <button onclick="printCalendar()">Imprimir Calendario</button>
         <button onclick="addPerson()">Agregar Persona</button>
         <button onclick="saveChanges()">Guardar Cambios</button>
         <button onclick="shareViaWhatsApp()">Compartir en WhatsApp</button>
