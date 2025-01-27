@@ -36,7 +36,7 @@
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
-            table-layout: fixed; /* La tabla se ajusta al espacio */
+            table-layout: auto; /* La tabla tendrá un ancho fijo para evitar que se desborde */
         }
         table th, table td {
             padding: 10px;
@@ -85,7 +85,6 @@
                 border-collapse: collapse;
                 font-size: 8px; /* Ajustar tamaño de fuente para que quepa en la hoja */
                 margin-top: 0;
-                table-layout: fixed; /* La tabla se ajusta al espacio disponible */
             }
             table th, table td {
                 padding: 4px; /* Reducir padding para maximizar el espacio */
@@ -99,23 +98,7 @@
             /* Ajustar la página a tamaño A4 en formato horizontal */
             @page {
                 size: A4 landscape; /* Definir orientación horizontal */
-                margin: 0mm; /* Eliminar márgenes para aprovechar al máximo el espacio */
-            }
-            /* Hacer que la tabla se divida entre las páginas si es necesario */
-            .container {
-                page-break-before: always; /* Forzar salto de página si la tabla es demasiado larga */
-            }
-            table {
-                page-break-inside: auto; /* No dividir filas de tabla entre páginas */
-            }
-            tr {
-                page-break-inside: avoid; /* Evitar que las filas se dividan entre páginas */
-            }
-            /* Ajustar la tabla para que ocupe todo el ancho y no corte el contenido */
-            td, th {
-                word-wrap: break-word;
-                overflow: hidden;
-                white-space: normal;
+                margin: 10mm; /* Reducir márgenes para aprovechar el espacio */
             }
         }
     </style>
