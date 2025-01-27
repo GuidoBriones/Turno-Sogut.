@@ -1,14 +1,14 @@
 let people = [
-    { name: "JOSE VALENCIA HOYOS", rut: "24964408-0" },
-    { name: "ANGEL ROJAS LONDOÑO", rut: "26771733-8" },
-    { name: "RICHARD COLINA COLINA", rut: "25751236-3" },
-    { name: "YORNATAN PEREIRA HERNANDEZ", rut: "28169717-K" },
-    { name: "MARCIAL VELASCO SUAREZ", rut: "24418305-0" },
-    { name: "KAREM SANTIS ROJAS", rut: "11326174-9" },
-    { name: "VALENTIN VALLEJOS MARTINEZ", rut: "24963989-3" },
-    { name: "CARLOS GUZMAN SALAZAR", rut: "28239185-6" },
-    { name: "DICK ASPRILLA ASPRILLA", rut: "25507071-1" },
-    { name: "FERNANDO PIZARRO TRONCOSO", rut: "11344582-3" }
+   {nombre: "JOSE", apellido: "VALENCIA HOYOS", rut: "24964408-0", cargo: "ayudante"},
+    {nombre: "ANGEL", apellido: "ROJAS LONDOÑO", rut: "26771733-8", cargo: "soldador"},
+    {nombre: "RICHARD", apellido: "COLINA COLINA", rut: "25751236-3", cargo: "Supervisor"},
+    {nombre: "YORNATAN", apellido: "PEREIRA HERNANDEZ", rut: "28169717-K", cargo: "ayudante"},
+    {nombre: "MARCIAL", apellido: "VELASCO SUAREZ", rut: "24418305-0", cargo: "Maestro OOCC"},
+    {nombre: "VALENTIN", apellido: "VALLEJOS MARTINEZ", rut: "24963989-3", cargo: "Ayudante"},
+    {nombre: "CARLOS", apellido: "Guzmán Salazar", rut: "28239185-6", cargo: "Ayudante"},
+    {nombre: "DICK", apellido: "ASPRILLA ASPRILLA", rut: "28451203-0", cargo: "Ayudante"},
+    {nombre: "DARWIN", apellido: "VALERO PARRA", rut: "25507071-1", cargo: "Ayudante"},
+    {nombre: "FERNANDO", apellido: "PIZARRO TRONCOSO", rut: "11344582-3", cargo: "supervisor"}
 ];
 
 const daysOfWeek = ["Lu", "Ma", "Mi", "Ju", "Vi", "Sa", "Do"];
