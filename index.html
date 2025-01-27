@@ -4,8 +4,102 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calendario de Turnos</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        /* CSS General */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: center;
+            border: 1px solid #ddd;
+            min-width: 80px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            margin: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #month-name {
+            font-size: 18px;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        /* Estilo para pantalla móvil */
+        #calendar-container {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        @media print {
+            body {
+                margin: 0;
+                background-color: white;
+                padding: 0;
+            }
+
+            table {
+                width: 100%;
+                font-size: 10px;
+            }
+
+            th, td {
+                padding: 5px;
+                min-width: 80px;
+                text-align: center;
+            }
+
+            @page {
+                size: A4;
+                margin: 20mm;
+            }
+
+            button {
+                display: none;
+            }
+
+            #month-name {
+                font-size: 18px;
+                text-align: center;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
 </head>
 <body>
 
@@ -37,20 +131,134 @@
                         <th>Nombre</th>
                         <th>RUT</th>
                         <th>Cargo</th>
+                        <!-- Días de la semana -->
+                        <th>Lu</th>
+                        <th>Ma</th>
+                        <th>Mi</th>
+                        <th>Ju</th>
+                        <th>Vi</th>
+                        <th>Si</th>
+                        <th>Do</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <!-- Las filas se llenarán dinámicamente con los datos -->
+                <tbody id="turnos-tbody">
+                    <!-- Las filas de personas y turnos se llenarán dinámicamente -->
                 </tbody>
             </table>
         </div>
 
-        <button onclick="printCalendar()">Imprimir Calendario</button>
         <button onclick="addPerson()">Agregar Persona</button>
         <button onclick="saveChanges()">Guardar Cambios</button>
+        <button onclick="generatePDF()">Generar PDF</button>
         <button onclick="shareViaWhatsApp()">Compartir en WhatsApp</button>
     </div>
 
-    <script src="script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script>
+        // Datos de ejemplo para personas (nombre, rut y cargo)
+        const personas = [
+            { nombre: 'JOSE VALENCIA HOYOS', rut: '24964408-0', cargo: 'Ayudante' },
+            { nombre: 'ANGEL ROJAS LONDOÑO', rut: '26771733-8', cargo: 'Supervisor' },
+            { nombre: 'RICHARD COLINA COLINA', rut: '25751236-3', cargo: 'Maestro' },
+            { nombre: 'YORNATAN PEREIRA HERNANDEZ', rut: '28169717-K', cargo: 'Ayudante' },
+            { nombre: 'MARCIAL VELASCO SUAREZ', rut: '24418305-0', cargo: 'Maestro' },
+            { nombre: 'KAREM SANTIS ROJAS', rut: '11326174-9', cargo: 'Ayudante' },
+            { nombre: 'VALENTIN VALLEJOS MARTINEZ', rut: '24963989-3', cargo: 'Ayudante' },
+            { nombre: 'CARLOS GUZMAN SALAZAR', rut: '28239185-6', cargo: 'Ayudante' },
+            { nombre: 'DICK ASPRILLA ASPRILLA', rut: '25507071-1', cargo: 'Ayudante' },
+            { nombre: 'FERNANDO PIZARRO TRONCOSO', rut: '11344582-3', cargo: 'Ayudante' }
+        ];
+
+        // Actualiza el calendario al cambiar el mes
+        const monthSelect = document.getElementById('month-select');
+        monthSelect.addEventListener('change', updateCalendar);
+        updateCalendar(); // Iniciar al cargar la página
+
+        // Función para actualizar el calendario
+        function updateCalendar() {
+            const monthIndex = monthSelect.value;
+            const monthName = new Date(2024, monthIndex).toLocaleString('default', { month: 'long' });
+            document.getElementById('month-name').innerText = `Mes de ${monthName.charAt(0).toUpperCase() + monthName.slice(1)} 2024`;
+
+            // Obtener el número de días en el mes seleccionado
+            const numDays = new Date(2024, monthIndex + 1, 0).getDate();
+            const tableBody = document.getElementById('turnos-tbody');
+            tableBody.innerHTML = ''; // Limpiar el contenido previo
+
+            // Crear filas para cada persona
+            personas.forEach(persona => {
+                let row = `<tr>
+                    <td>${persona.nombre}</td>
+                    <td>${persona.rut}</td>
+                    <td>${persona.cargo}</td>`;
+
+                // Crear celdas para cada día del mes
+                for (let i = 1; i <= numDays; i++) {
+                    row += `<td contenteditable="true" class="day-cell" data-day="${i}" oninput="updateCell(this)"></td>`;
+                }
+
+                row += `</tr>`;
+                tableBody.innerHTML += row;
+            });
+        }
+
+        // Actualiza el contenido de una celda al ingresar texto
+        function updateCell(cell) {
+            // Verificar el contenido ingresado, por ejemplo 'si', 'no', 'desc', 'H.ext'
+            const value = cell.textContent.trim().toLowerCase();
+            if (['si', 'no', 'desc', 'h.ext'].indexOf(value) === -1) {
+                cell.textContent = ''; // Si no es un valor válido, vaciar la celda
+            }
+        }
+
+        // Función para agregar una nueva persona
+        function addPerson() {
+            const nombre = prompt('Nombre completo:');
+            const rut = prompt('RUT (ejemplo: 24964408-0):');
+            const cargo = prompt('Cargo:');
+            personas.push({ nombre, rut, cargo });
+            updateCalendar(); // Volver a cargar la tabla
+        }
+
+        // Guardar los cambios como archivo HTML
+        function saveChanges() {
+            const fileName = prompt("Ingrese el nombre para el archivo (sin extensión):", "turnos_calendario");
+
+            if (fileName) {
+                const calendarContent = document.getElementById("calendar-container").innerHTML;
+                const blob = new Blob([calendarContent], { type: 'text/html' });
+                const link = document.createElement("a");
+                link.href = URL.createObjectURL(blob);
+                link.download = `${fileName}.html`;
+                link.click();
+            }
+        }
+
+        // Generar PDF del calendario
+        function generatePDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            const elementHTML = document.getElementById('calendar-container').innerHTML;
+            doc.html(elementHTML, {
+                callback: function (doc) {
+                    doc.save('calendario_turnos.pdf');
+                },
+                margin: [10, 10, 10, 10],
+                x: 10,
+                y: 10,
+                width: 190,
+                windowWidth: 800
+            });
+        }
+
+        // Función para compartir en WhatsApp
+        function shareViaWhatsApp() {
+            const monthName = document.getElementById('month-name').innerText;
+            const calendarURL = window.location.href; // Suponiendo que estás usando GitHub Pages u otra URL
+            const message = `Calendario de turnos para el ${monthName}\n${calendarURL}`;
+            const whatsappURL = `https://wa.me/?text=${encodeURIComponent(message)}`;
+            window.open(whatsappURL, '_blank');
+        }
+    </script>
 </body>
 </html>
