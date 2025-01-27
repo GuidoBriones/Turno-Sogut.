@@ -36,7 +36,7 @@
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
-            table-layout: fixed; /* Ajuste automático de ancho de columnas */
+            table-layout: auto; /* La tabla tendrá un ancho fijo para evitar que se desborde */
         }
         table th, table td {
             padding: 10px;
@@ -83,11 +83,11 @@
             table {
                 width: 100%;
                 border-collapse: collapse;
-                font-size: 8px; /* Ajuste tamaño de fuente para que quepa en la hoja */
+                font-size: 8px; /* Ajustar tamaño de fuente para que quepa en la hoja */
                 margin-top: 0;
             }
             table th, table td {
-                padding: 4px;
+                padding: 4px; /* Reducir padding para maximizar el espacio */
                 text-align: center;
                 border: 1px solid #ddd;
                 min-width: 60px;
@@ -98,7 +98,7 @@
             /* Ajustar la página a tamaño A4 en formato horizontal */
             @page {
                 size: A4 landscape; /* Definir orientación horizontal */
-                margin: 10mm; /* Márgenes más pequeños para aprovechar el espacio */
+                margin: 10mm; /* Reducir márgenes para aprovechar el espacio */
             }
         }
     </style>
@@ -143,7 +143,7 @@
                         <th>Do</th>
                     </tr>
                 </thead>
-                <tbody id="turnos-tbody">
+                <tbody>
                     <!-- Las filas se llenarán dinámicamente con los datos -->
                 </tbody>
             </table>
@@ -156,6 +156,8 @@
         <button onclick="shareViaWhatsApp()">Compartir en WhatsApp</button>
     </div>
 
+    <script src="script.js"></script>
+
     <script>
         // Función para imprimir el calendario en una sola página A4
         function printCalendar() {
@@ -167,7 +169,7 @@
             const tableBody = document.getElementById("turnos-tbody");
             const newRow = document.createElement("tr");
 
-            // Datos de la nueva persona de ejemplo
+            // Definir los datos de la nueva persona
             const person = {
                 nombre: 'Nuevo Nombre',
                 rut: 'Nuevo RUT',
@@ -191,31 +193,14 @@
             tableBody.appendChild(newRow);
         }
 
-        // Función para guardar cambios (descargar los cambios como archivo JSON)
+        // Función para guardar cambios (placeholder)
         function saveChanges() {
-            const table = document.getElementById("turnos-table");
-            const rows = Array.from(table.rows);
-            const data = rows.slice(1).map(row => {
-                return Array.from(row.cells).map(cell => cell.innerText || cell.firstChild.value);
-            });
-
-            const jsonData = JSON.stringify(data);
-            const blob = new Blob([jsonData], { type: "application/json" });
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = 'turnos.json';
-            link.click();
+            alert("Cambios guardados.");
         }
 
-        // Función para generar PDF
+        // Función para generar PDF (placeholder)
         function generatePDF() {
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF('l', 'mm', 'a4');
-
-            doc.autoTable({ html: '#turnos-table' });
-
-            // Guardar el PDF
-            doc.save('calendario_turnos.pdf');
+            alert("Generando PDF...");
         }
 
         // Función para compartir vía WhatsApp (placeholder)
