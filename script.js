@@ -1,69 +1,68 @@
-// Definimos los días de la semana y los nombres de los meses
-const daysOfWeek = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];
+// Definimos los días de la semana y los meses
+const daysOfWeek = ['L', 'M', 'M', 'J', 'V', 'S', 'D', 'L', 'M', 'M', 'J', 'V', 'S', 'D', 'L', 'M', 'M', 'J', 'V', 'S', 'D', 'L', 'M', 'M', 'J', 'V', 'S', 'D', 'L', 'M', 'M'];
 const months = [
     "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", 
     "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
 ];
 
-// Generamos el calendario con los días y los turnos
+// Lista de personas (nombre, RUT, cargo)
+const people = [
+    {name: "KAREM SANTIS", rut: "12.837.593-7", cargo: "APR"},
+    {name: "MARCIAL SUAREZ", rut: "24.418.305-0", cargo: "MAESTRO OOCC"},
+    {name: "RICHARD COLINA", rut: "", cargo: "SUPERVISOR"},
+    {name: "ANGEL ESNAIDER ROJAS", rut: "27.985.208-7", cargo: "SOLDADOR"},
+    {name: "YORNATAN PEREIRA", rut: "28.169.717-K", cargo: "AYUD OOCC"},
+    {name: "JAVIER VALENCIA", rut: "", cargo: "AYUDANTE"},
+    {name: "CARLOS GUZMAN", rut: "", cargo: "AYUDANTE"},
+    {name: "VALENTIN VALLEJOS", rut: "", cargo: "AYUDANTE"},
+    {name: "DICK ASPRILLA", rut: "", cargo: "AYUDANTE"}
+];
+
+// Función para generar el calendario
 function generateCalendar() {
     const calendarTableBody = document.querySelector("#calendar-table tbody");
     const currentMonth = new Date().getMonth(); // Obtener el mes actual
     const currentYear = new Date().getFullYear();
-    const firstDay = new Date(currentYear, currentMonth, 1).getDay(); // Día de la semana del primer día del mes
-    const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate(); // Número de días en el mes
-    
+
     // Mostrar el nombre del mes
     const monthName = document.getElementById("month-name");
-    monthName.textContent = months[currentMonth] + ' ' + currentYear;
+    monthName.textContent = `${months[currentMonth]} ${currentYear}`;
 
     // Limpiar cualquier fila existente en el calendario
     calendarTableBody.innerHTML = "";
 
-    // Crear las filas para cada día del mes
-    for (let day = 1; day <= daysInMonth; day++) {
+    // Crear las filas para cada persona
+    people.forEach(person => {
         const row = document.createElement("tr");
         
-        // Columna Día
-        const dayCell = document.createElement("td");
-        dayCell.textContent = day;
-        row.appendChild(dayCell);
+        // Columna Nombre
+        const nameCell = document.createElement("td");
+        nameCell.textContent = person.name;
+        row.appendChild(nameCell);
 
-        // Columna Turno 1: Nombre
-        const nameCell1 = document.createElement("td");
-        const inputName1 = document.createElement("input");
-        inputName1.type = "text";
-        inputName1.placeholder = "Nombre Turno 1";
-        nameCell1.appendChild(inputName1);
-        row.appendChild(nameCell1);
+        // Columna RUT
+        const rutCell = document.createElement("td");
+        rutCell.textContent = person.rut;
+        row.appendChild(rutCell);
 
-        // Columna Turno 1: RUT
-        const rutCell1 = document.createElement("td");
-        const inputRut1 = document.createElement("input");
-        inputRut1.type = "text";
-        inputRut1.placeholder = "RUT Turno 1";
-        rutCell1.appendChild(inputRut1);
-        row.appendChild(rutCell1);
+        // Columna Cargo
+        const cargoCell = document.createElement("td");
+        cargoCell.textContent = person.cargo;
+        row.appendChild(cargoCell);
+
+        // Crear las celdas para los días del mes
+        for (let i = 1; i <= 31; i++) {
+            const dayCell = document.createElement("td");
+            const input = document.createElement("input");
+            input.type = "text";
+            input.placeholder = "si";
+            dayCell.appendChild(input);
+            row.appendChild(dayCell);
+        }
 
         // Agregar la fila al calendario
         calendarTableBody.appendChild(row);
-
-        // Columna Turno 2: Nombre (agregar más celdas si es necesario)
-        const nameCell2 = document.createElement("td");
-        const inputName2 = document.createElement("input");
-        inputName2.type = "text";
-        inputName2.placeholder = "Nombre Turno 2";
-        nameCell2.appendChild(inputName2);
-        row.appendChild(nameCell2);
-
-        // Columna Turno 2: RUT
-        const rutCell2 = document.createElement("td");
-        const inputRut2 = document.createElement("input");
-        inputRut2.type = "text";
-        inputRut2.placeholder = "RUT Turno 2";
-        rutCell2.appendChild(inputRut2);
-        row.appendChild(rutCell2);
-    }
+    });
 }
 
 // Función para generar el PDF con la información
@@ -76,16 +75,18 @@ function generatePDF() {
     let y = 40;
     
     calendarRows.forEach((row, index) => {
-        const day = row.cells[0].textContent;
-        const turno1Name = row.cells[1].querySelector('input').value;
-        const turno1Rut = row.cells[2].querySelector('input').value;
-        const turno2Name = row.cells[3].querySelector('input').value;
-        const turno2Rut = row.cells[4].querySelector('input').value;
-
-        doc.text(`Día ${day}:`, 20, y);
-        doc.text(`Turno 1: ${turno1Name} (RUT: ${turno1Rut})`, 20, y + 10);
-        doc.text(`Turno 2: ${turno2Name} (RUT: ${turno2Rut})`, 20, y + 20);
-        y += 30;
+        const name = row.cells[0].textContent;
+        const rut = row.cells[1].textContent;
+        const cargo = row.cells[2].textContent;
+        doc.text(`Nombre: ${name} (RUT: ${rut}, Cargo: ${cargo})`, 20, y);
+        y += 10;
+        
+        const days = [];
+        for (let i = 3; i < row.cells.length; i++) {
+            days.push(row.cells[i].querySelector('input').value || "-");
+        }
+        doc.text(`Días: ${days.join(", ")}`, 20, y);
+        y += 20;
     });
 
     // Guardar el PDF
@@ -94,4 +95,3 @@ function generatePDF() {
 
 // Iniciar la generación del calendario
 generateCalendar();
-
