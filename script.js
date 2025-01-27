@@ -102,9 +102,13 @@ function downloadPDF() {
         format: 'letter' // Tamaño carta (8.5 x 11)
     });
 
+    // Añadir el título
     doc.text("Calendario de Turnos", 20, 20);
+    
+    // Añadir la tabla con autoTable
     doc.autoTable({ html: '#turnos-table' });
 
+    // Pedir nombre para el archivo PDF
     const fileName = prompt("Ingrese un nombre para el archivo PDF", "calendario_turnos.pdf");
     if (fileName) {
         doc.save(fileName);
