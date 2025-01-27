@@ -121,4 +121,92 @@
             <option value="7">Agosto</option>
             <option value="8">Septiembre</option>
             <option value="9">Octubre</option>
-            <option value
+            <option value="10">Noviembre</option>
+            <option value="11">Diciembre</option>
+        </select>
+
+        <h3 id="month-name"></h3>
+
+        <div id="calendar-container">
+            <table id="turnos-table">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>RUT</th>
+                        <th>Cargo</th>
+                        <th>Lu</th>
+                        <th>Ma</th>
+                        <th>Mi</th>
+                        <th>Ju</th>
+                        <th>Vi</th>
+                        <th>Si</th>
+                        <th>Do</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Las filas se llenarán dinámicamente con los datos -->
+                </tbody>
+            </table>
+        </div>
+
+        <button onclick="printCalendar()">Imprimir Calendario</button>
+        <button onclick="addPerson()">Agregar Persona</button>
+        <button onclick="saveChanges()">Guardar Cambios</button>
+        <button onclick="generatePDF()">Generar PDF</button>
+        <button onclick="shareViaWhatsApp()">Compartir en WhatsApp</button>
+    </div>
+
+    <script src="script.js"></script>
+
+    <script>
+        // Función para imprimir el calendario en una sola página A4
+        function printCalendar() {
+            window.print();
+        }
+
+        // Función para agregar una nueva persona a la tabla
+        function addPerson() {
+            const tableBody = document.getElementById("turnos-tbody");
+            const newRow = document.createElement("tr");
+
+            // Definir los datos de la nueva persona
+            const person = {
+                nombre: 'Nuevo Nombre',
+                rut: 'Nuevo RUT',
+                cargo: 'Nuevo Cargo'
+            };
+
+            // Crear celdas para la persona
+            newRow.innerHTML = `
+                <td>${person.nombre}</td>
+                <td>${person.rut}</td>
+                <td>${person.cargo}</td>
+                <td><input type="text" placeholder="Si/No"></td>
+                <td><input type="text" placeholder="Si/No"></td>
+                <td><input type="text" placeholder="Si/No"></td>
+                <td><input type="text" placeholder="Si/No"></td>
+                <td><input type="text" placeholder="Si/No"></td>
+                <td><input type="text" placeholder="Si/No"></td>
+                <td><input type="text" placeholder="Si/No"></td>
+            `;
+
+            tableBody.appendChild(newRow);
+        }
+
+        // Función para guardar cambios (placeholder)
+        function saveChanges() {
+            alert("Cambios guardados.");
+        }
+
+        // Función para generar PDF (placeholder)
+        function generatePDF() {
+            alert("Generando PDF...");
+        }
+
+        // Función para compartir vía WhatsApp (placeholder)
+        function shareViaWhatsApp() {
+            alert("Compartiendo en WhatsApp...");
+        }
+    </script>
+</body>
+</html>
