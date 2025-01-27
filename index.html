@@ -9,30 +9,45 @@
 <body>
     <div class="container">
         <h1>Calendario de Turnos</h1>
-        <div class="calendar-header">
-            <span id="month-name"></span>
-        </div>
-        <table id="calendar-table" class="calendar-table">
+        
+        <!-- Selector de mes -->
+        <label for="month-select">Selecciona el mes:</label>
+        <select id="month-select">
+            <option value="0">Enero</option>
+            <option value="1">Febrero</option>
+            <option value="2">Marzo</option>
+            <option value="3">Abril</option>
+            <option value="4">Mayo</option>
+            <option value="5">Junio</option>
+            <option value="6">Julio</option>
+            <option value="7">Agosto</option>
+            <option value="8">Septiembre</option>
+            <option value="9">Octubre</option>
+            <option value="10">Noviembre</option>
+            <option value="11">Diciembre</option>
+        </select>
+
+        <div id="month-name"></div>
+        
+        <table id="turnos-table" class="turnos-table">
             <thead>
                 <tr>
-                    <th rowspan="2">NOMBRE</th>
+                    <th rowspan="2">Nombre</th>
                     <th rowspan="2">RUT</th>
-                    <th rowspan="2">CARGO</th>
                     <th colspan="31">Días</th>
                 </tr>
                 <tr>
-                    <th>L</th><th>M</th><th>M</th><th>J</th><th>V</th><th>S</th><th>D</th>
-                    <th>L</th><th>M</th><th>M</th><th>J</th><th>V</th><th>S</th><th>D</th>
-                    <th>L</th><th>M</th><th>M</th><th>J</th><th>V</th><th>S</th><th>D</th>
-                    <th>L</th><th>M</th><th>M</th><th>J</th><th>V</th><th>S</th><th>D</th>
+                    <!-- Las cabeceras de los días serán generadas automáticamente -->
                 </tr>
             </thead>
             <tbody>
-                <!-- Aquí se agregarán las filas de personas -->
+                <!-- Las filas de las personas se agregarán aquí -->
             </tbody>
         </table>
-        <button onclick="generatePDF()">Generar PDF</button>
+        
+        <button onclick="addPerson()">Agregar Persona</button>
     </div>
+    
     <script src="script.js"></script>
 </body>
 </html>
