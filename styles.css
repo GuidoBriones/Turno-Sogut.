@@ -40,12 +40,14 @@ table {
     border-collapse: collapse;
     margin-top: 20px;
     table-layout: fixed; /* Para que las celdas no se desborden */
+    overflow-x: auto; /* Permitir scroll horizontal */
 }
 
 th, td {
     padding: 10px;
     border: 1px solid #ddd;
     text-align: center;
+    word-wrap: break-word;
 }
 
 input[type="text"], select {
@@ -80,5 +82,9 @@ button:hover {
     }
     select, input[type="text"] {
         font-size: 14px;
+    }
+    /* Se hace la tabla desplazable horizontalmente */
+    .container {
+        overflow-x: auto;
     }
 }
