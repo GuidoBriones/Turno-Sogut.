@@ -36,13 +36,18 @@ select {
     margin-bottom: 20px;
 }
 
+#calendar-container {
+    overflow-x: auto;
+    margin-top: 20px;
+}
+
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 20px;
     table-layout: auto;
     overflow-x: auto;
     display: block;
+    margin-top: 20px;
 }
 
 th, td {
@@ -79,9 +84,11 @@ button:hover {
 @media (max-width: 600px) {
     table {
         font-size: 10px;
+        overflow-x: scroll;
     }
     th, td {
-        padding: 5px;
+        padding: 8px;
+        min-width: 100px;
     }
     select, input[type="text"] {
         font-size: 14px;
@@ -89,5 +96,37 @@ button:hover {
     .container {
         overflow-x: auto;
         width: 100%;
+    }
+}
+
+/* Impresión */
+@media print {
+    body {
+        background-color: white;
+        padding: 0;
+    }
+
+    .container {
+        width: 100%;
+        max-width: none;
+        box-shadow: none;
+    }
+
+    button {
+        display: none;
+    }
+
+    #month-name {
+        font-size: 20px;
+    }
+
+    table {
+        width: 100%;
+        font-size: 12px;
+        page-break-after: always;
+    }
+
+    th, td {
+        padding: 10px;
     }
 }
