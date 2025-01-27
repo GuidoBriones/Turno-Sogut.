@@ -61,10 +61,15 @@ function generateCalendar(monthIndex) {
         for (let i = 1; i <= 31; i++) {
             if (i <= numDays) {
                 const dayCell = document.createElement("td");
-                const input = document.createElement("input");
-                input.type = "text";
-                input.placeholder = "si"; // Por defecto puede ser "si"
-                dayCell.appendChild(input);
+                const select = document.createElement("select");
+                const options = ["si", "no", "desc"].map(value => {
+                    const option = document.createElement("option");
+                    option.value = value;
+                    option.innerText = value.charAt(0).toUpperCase() + value.slice(1);
+                    return option;
+                });
+                options.forEach(option => select.appendChild(option));
+                dayCell.appendChild(select);
                 row.appendChild(dayCell);
             } else {
                 const dayCell = document.createElement("td");
@@ -86,6 +91,17 @@ function addPerson() {
         people.push({ name: name, rut: rut });
         generateCalendar(document.getElementById("month-select").value);
     }
+}
+
+// Función para descargar el calendario en PDF
+function downloadPDF() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    doc.text("Calendario de Turnos", 20, 20);
+    doc.autoTable({ html: '#turnos-table' });
+
+    doc.save('calendario_turnos.pdf');
 }
 
 // Llamar a la función para generar el calendario al cargar la página
