@@ -36,7 +36,7 @@
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
-            table-layout: fixed; /* La tabla tendrá un ancho fijo para evitar que se desborde */
+            table-layout: auto; /* La tabla tendrá un ancho fijo para evitar que se desborde */
         }
         table th, table td {
             padding: 10px;
@@ -97,8 +97,8 @@
             }
             /* Ajustar la página a tamaño A4 en formato horizontal */
             @page {
-                size: A4 landscape;
-                margin: 5mm; /* Reducir márgenes para aprovechar el espacio */
+                size: A4 landscape; /* Definir orientación horizontal */
+                margin: 10mm; /* Reducir márgenes para aprovechar el espacio */
             }
         }
     </style>
