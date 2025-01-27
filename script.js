@@ -78,7 +78,6 @@ function addPerson() {
 
 function saveChanges() {
     alert("Cambios guardados correctamente.");
-    // En este paso puedes guardar los datos localmente o hacer alguna otra acción como guardarlos en un archivo.
 }
 
 function downloadPDF() {
@@ -95,6 +94,20 @@ function downloadPDF() {
     const fileName = prompt("Ingrese un nombre para el archivo PDF", "calendario_turnos.pdf");
     if (fileName) {
         doc.save(fileName);
+
+        // Crear enlace para compartir por WhatsApp
+        const message = encodeURIComponent("Aquí te envío el calendario de turnos generado: \n\n" + window.location.href);
+        const whatsappLink = `https://wa.me/?text=${message}`;
+
+        // Crear un enlace dinámico para compartir en WhatsApp
+        const shareButton = document.createElement('button');
+        shareButton.textContent = 'Compartir por WhatsApp';
+        shareButton.onclick = () => {
+            window.open(whatsappLink, '_blank');
+        };
+
+        // Añadir el botón de compartir por WhatsApp
+        document.body.appendChild(shareButton);
     }
 }
 
