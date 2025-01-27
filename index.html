@@ -10,6 +10,7 @@
             margin: 0;
             padding: 0;
             background-color: #f4f4f9;
+            overflow-x: auto;
         }
         .container {
             width: 100%;
@@ -19,6 +20,7 @@
             background-color: white;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow-x: auto;
         }
         h1 {
             text-align: center;
@@ -28,6 +30,7 @@
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
+            table-layout: fixed;
         }
         table th, table td {
             padding: 10px;
@@ -96,18 +99,7 @@
                 </tr>
             </thead>
             <tbody id="turnos-tbody">
-                <tr>
-                    <td><input type="text" placeholder="Nombre"></td>
-                    <td><input type="text" placeholder="RUT"></td>
-                    <td><input type="text" placeholder="Cargo"></td>
-                    <td><input type="text" placeholder="si"></td>
-                    <td><input type="text" placeholder="si"></td>
-                    <td><input type="text" placeholder="si"></td>
-                    <td><input type="text" placeholder="si"></td>
-                    <td><input type="text" placeholder="si"></td>
-                    <td><input type="text" placeholder="si"></td>
-                    <td><input type="text" placeholder="si"></td>
-                </tr>
+                <!-- Las filas de personas y turnos se llenarán dinámicamente -->
             </tbody>
         </table>
     </div>
@@ -118,8 +110,24 @@
 </div>
 
 <script>
+// Lista de nombres y RUTs
+const people = [
+    {nombre: "JOSE", apellido: "VALENCIA HOYOS", rut: "24964408-0", cargo: "Empleado"},
+    {nombre: "ANGEL", apellido: "ROJAS LONDOÑO", rut: "26771733-8", cargo: "Empleado"},
+    {nombre: "RICHARD", apellido: "COLINA COLINA", rut: "25751236-3", cargo: "Supervisor"},
+    {nombre: "YORNATAN", apellido: "PEREIRA HERNANDEZ", rut: "28169717-K", cargo: "Empleado"},
+    {nombre: "MARCIAL", apellido: "VELASCO SUAREZ", rut: "24418305-0", cargo: "Maestro OOCC"},
+    {nombre: "KAREM", apellido: "SANTIS ROJAS", rut: "11326174-9", cargo: "Soldador"},
+    {nombre: "VALENTIN", apellido: "VALLEJOS MARTINEZ", rut: "24963989-3", cargo: "Ayudante"},
+    {nombre: "CARLOS", apellido: "Guzmán Salazar", rut: "28239185-6", cargo: "Ayudante"},
+    {nombre: "DICK", apellido: "ASPRILLA ASPRILLA", rut: "25507071-1", cargo: "Ayudante"},
+    {nombre: "FERNANDO", apellido: "PIZARRO TRONCOSO", rut: "11344582-3", cargo: "Ayudante"}
+];
+
 // Mostrar el mes y los días correctos
 const monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+const days = ["Lu", "Ma", "Mi", "Ju", "Vi", "Si", "Do"];
+const year = 2024;  // Año fijo para el calendario
 
 document.getElementById("month-select").addEventListener("change", function() {
     const selectedMonth = parseInt(this.value);
@@ -131,11 +139,10 @@ function displayCalendar(monthIndex) {
     const monthName = monthNames[monthIndex];
     document.getElementById("month-name").textContent = `Mes: ${monthName} 2024`;
 
-    const firstDay = new Date(2024, monthIndex, 1).getDay(); // Día de la semana del primer día del mes
-    const daysInMonth = new Date(2024, monthIndex + 1, 0).getDate(); // Total de días en el mes
+    const firstDay = new Date(year, monthIndex, 1).getDay(); // Día de la semana del primer día del mes
+    const daysInMonth = new Date(year, monthIndex + 1, 0).getDate(); // Total de días en el mes
 
     // Generar las celdas de los días
-    const days = ["Lu", "Ma", "Mi", "Ju", "Vi", "Si", "Do"];
     const tableBody = document.getElementById("turnos-tbody");
 
     // Limpiar la tabla antes de agregar los nuevos días
@@ -143,7 +150,7 @@ function displayCalendar(monthIndex) {
 
     // Crear las filas para los turnos
     let row = document.createElement("tr");
-    for (let i = 0; i < firstDay; i++) {
+    for (let i = 0; i < 3; i++) {
         row.appendChild(document.createElement("td")); // Celdas vacías hasta el primer día
     }
     for (let day = 1; day <= daysInMonth; day++) {
@@ -157,22 +164,42 @@ function displayCalendar(monthIndex) {
     }
     tableBody.appendChild(row); // Agregar la última fila
 
-    addPerson(); // Agregar una fila de ejemplo al inicio
+    addPeopleRows(); // Agregar las filas de las personas
 }
 
-// Función para agregar personas
-function addPerson() {
+// Función para agregar las personas a la tabla
+function addPeopleRows() {
     const tableBody = document.getElementById("turnos-tbody");
-    const newRow = document.createElement("tr");
-    for (let i = 0; i < 10; i++) {
-        const cell = document.createElement("td");
-        const input = document.createElement("input");
-        input.type = "text";
-        input.placeholder = "si"; // Valor por defecto
-        cell.appendChild(input);
-        newRow.appendChild(cell);
-    }
-    tableBody.appendChild(newRow);
+
+    // Agregar cada persona a la tabla
+    people.forEach(person => {
+        const newRow = document.createElement("tr");
+
+        // Celdas para nombre, rut y cargo
+        const nameCell = document.createElement("td");
+        nameCell.textContent = person.nombre + " " + person.apellido;
+        newRow.appendChild(nameCell);
+
+        const rutCell = document.createElement("td");
+        rutCell.textContent = person.rut;
+        newRow.appendChild(rutCell);
+
+        const cargoCell = document.createElement("td");
+        cargoCell.textContent = person.cargo;
+        newRow.appendChild(cargoCell);
+
+        // Celdas para los días de la semana
+        for (let i = 0; i < 7; i++) {
+            const cell = document.createElement("td");
+            const input = document.createElement("input");
+            input.type = "text";
+            input.placeholder = "si"; // Valor por defecto
+            cell.appendChild(input);
+            newRow.appendChild(cell);
+        }
+
+        tableBody.appendChild(newRow);
+    });
 }
 
 // Función para guardar cambios (solo simula el proceso)
