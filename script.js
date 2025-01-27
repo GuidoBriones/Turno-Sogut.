@@ -20,18 +20,10 @@ function generateCalendar(monthIndex) {
     const daysHeader = document.querySelector("#turnos-table thead tr");
     daysHeader.innerHTML = `<th>Nombre</th><th>RUT</th><th>Cargo</th>`; 
 
-    let day = 1;
-    for (let i = 0; i < 31; i++) {
-        if (day <= numDays) {
-            const th = document.createElement("th");
-            th.innerText = `${daysOfWeek[(firstDay + i) % 7]} ${day}`;
-            daysHeader.appendChild(th);
-            day++;
-        } else {
-            const th = document.createElement("th");
-            th.innerText = "";
-            daysHeader.appendChild(th);
-        }
+    for (let i = 1; i <= numDays; i++) {
+        const th = document.createElement("th");
+        th.innerText = `${daysOfWeek[(firstDay + i - 1) % 7]} ${i}`;
+        daysHeader.appendChild(th);
     }
 
     const tableBody = document.querySelector("#turnos-table tbody");
@@ -48,6 +40,10 @@ function generateCalendar(monthIndex) {
         rutCell.innerText = person.rut;
         row.appendChild(rutCell);
 
+        const cargoCell = document.createElement("td");
+        cargoCell.innerText = "Cargo Ejemplo";
+        row.appendChild(cargoCell);
+
         for (let i = 1; i <= numDays; i++) {
             const dayCell = document.createElement("td");
             const select = document.createElement("select");
@@ -58,7 +54,12 @@ function generateCalendar(monthIndex) {
                 return option;
             });
             options.forEach(option => select.appendChild(option));
+
+            const hourExtraInput = document.createElement("input");
+            hourExtraInput.type = "number";
+            hourExtraInput.placeholder = "H.ext";
             dayCell.appendChild(select);
+            dayCell.appendChild(hourExtraInput);
             row.appendChild(dayCell);
         }
 
@@ -94,21 +95,13 @@ function downloadPDF() {
     const fileName = prompt("Ingrese un nombre para el archivo PDF", "calendario_turnos.pdf");
     if (fileName) {
         doc.save(fileName);
-
-        // Crear enlace para compartir por WhatsApp
-        const message = encodeURIComponent("Aquí te envío el calendario de turnos generado: \n\n" + window.location.href);
-        const whatsappLink = `https://wa.me/?text=${message}`;
-
-        // Crear un enlace dinámico para compartir en WhatsApp
-        const shareButton = document.createElement('button');
-        shareButton.textContent = 'Compartir por WhatsApp';
-        shareButton.onclick = () => {
-            window.open(whatsappLink, '_blank');
-        };
-
-        // Añadir el botón de compartir por WhatsApp
-        document.body.appendChild(shareButton);
     }
+}
+
+function shareViaWhatsApp() {
+    const message = encodeURIComponent("Aquí te envío el calendario de turnos generado: \n\n" + window.location.href);
+    const whatsappLink = `https://wa.me/?text=${message}`;
+    window.open(whatsappLink, '_blank');
 }
 
 document.getElementById("month-select").addEventListener("change", (e) => {
