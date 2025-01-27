@@ -36,7 +36,7 @@
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
-            table-layout: auto; /* La tabla tendrá un ancho fijo para evitar que se desborde */
+            table-layout: fixed; /* Ajuste automático de ancho de columnas */
         }
         table th, table td {
             padding: 10px;
@@ -83,11 +83,11 @@
             table {
                 width: 100%;
                 border-collapse: collapse;
-                font-size: 8px; /* Ajustar tamaño de fuente para que quepa en la hoja */
+                font-size: 8px; /* Ajuste tamaño de fuente para que quepa en la hoja */
                 margin-top: 0;
             }
             table th, table td {
-                padding: 4px; /* Reducir padding para maximizar el espacio */
+                padding: 4px;
                 text-align: center;
                 border: 1px solid #ddd;
                 min-width: 60px;
@@ -98,7 +98,7 @@
             /* Ajustar la página a tamaño A4 en formato horizontal */
             @page {
                 size: A4 landscape; /* Definir orientación horizontal */
-                margin: 10mm; /* Reducir márgenes para aprovechar el espacio */
+                margin: 10mm; /* Márgenes más pequeños para aprovechar el espacio */
             }
         }
     </style>
@@ -143,7 +143,7 @@
                         <th>Do</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="turnos-tbody">
                     <!-- Las filas se llenarán dinámicamente con los datos -->
                 </tbody>
             </table>
@@ -156,8 +156,6 @@
         <button onclick="shareViaWhatsApp()">Compartir en WhatsApp</button>
     </div>
 
-    <script src="script.js"></script>
-
     <script>
         // Función para imprimir el calendario en una sola página A4
         function printCalendar() {
@@ -169,7 +167,7 @@
             const tableBody = document.getElementById("turnos-tbody");
             const newRow = document.createElement("tr");
 
-            // Definir los datos de la nueva persona
+            // Datos de la nueva persona de ejemplo
             const person = {
                 nombre: 'Nuevo Nombre',
                 rut: 'Nuevo RUT',
