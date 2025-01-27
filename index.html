@@ -15,12 +15,21 @@
         <table id="calendar-table" class="calendar-table">
             <thead>
                 <tr>
-                    <th>Turno</th>
-                    <th>Nombre</th>
-                    <th>RUT</th>
+                    <th rowspan="2">NOMBRE</th>
+                    <th rowspan="2">RUT</th>
+                    <th rowspan="2">CARGO</th>
+                    <th colspan="31">Días</th>
+                </tr>
+                <tr>
+                    <th>L</th><th>M</th><th>M</th><th>J</th><th>V</th><th>S</th><th>D</th>
+                    <th>L</th><th>M</th><th>M</th><th>J</th><th>V</th><th>S</th><th>D</th>
+                    <th>L</th><th>M</th><th>M</th><th>J</th><th>V</th><th>S</th><th>D</th>
+                    <th>L</th><th>M</th><th>M</th><th>J</th><th>V</th><th>S</th><th>D</th>
                 </tr>
             </thead>
-            <tbody></tbody>
+            <tbody>
+                <!-- Aquí se agregarán las filas de personas -->
+            </tbody>
         </table>
         <button onclick="generatePDF()">Generar PDF</button>
     </div>
